@@ -86,7 +86,7 @@ class TrackingNode(Node):
         self.timer = self.create_timer(0.01, self.timer_update)
     
     def detected_obs_pose_callback(self, msg):
-        self.get_logger().info('Received Detected Object Pose')
+        self.get_logger().info('Received Detected Object Obstacle Pose')
         
         odom_id = self.get_parameter('world_frame_id').get_parameter_value().string_value
         center_points = np.array([msg.pose.position.x, msg.pose.position.y, msg.pose.position.z])
@@ -111,7 +111,7 @@ class TrackingNode(Node):
         self.obs_pose = cp_world
 
     def detected_goal_pose_callback(self, msg):
-        self.get_logger().info('Received Detected Object Pose')
+        self.get_logger().info('Received Detected Object Goal Pose')
         
         odom_id = self.get_parameter('world_frame_id').get_parameter_value().string_value
         center_points = np.array([msg.pose.position.x, msg.pose.position.y, msg.pose.position.z])
@@ -162,6 +162,8 @@ class TrackingNode(Node):
         # Now, the robot stops if the object is not detected
         # But, you may want to think about what to do in this case
         # and update the command velocity accordingly
+        self.get_logger().info('Timer Update')
+        
         if self.goal_pose is None:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
