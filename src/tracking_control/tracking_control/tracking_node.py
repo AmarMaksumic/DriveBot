@@ -175,6 +175,8 @@ class TrackingNode(Node):
         # TODO: get the control velocity command
         cmd_vel = self.controller(current_goal_pose, current_obs_pose)
         
+        self.get_logger().info('Control Command: Linear: {}, Angular: {}'.format(cmd_vel.linear.x, cmd_vel.angular.z))
+
         # publish the control command
         self.pub_control_cmd.publish(cmd_vel)
         #################################################
@@ -216,6 +218,8 @@ class TrackingNode(Node):
         # Combine forces
         total_force = attractive_force + repulsive_force
 
+        self.get_logger().info('Attractive Force: {}, Repulsive Force: {}, Total Force: {}'.format(attractive_force, repulsive_force, total_force))
+
         # Convert force to velocity command
         cmd_vel = Twist()
         cmd_vel.linear.x = total_force[0]
@@ -224,11 +228,11 @@ class TrackingNode(Node):
         return cmd_vel
         
         # TODO: Update the control velocity command
-        cmd_vel = Twist()
-        cmd_vel.linear.x = 0
-        cmd_vel.linear.y = 0
-        cmd_vel.angular.z = 0
-        return cmd_vel
+        # cmd_vel = Twist()
+        # cmd_vel.linear.x = 0
+        # cmd_vel.linear.y = 0
+        # cmd_vel.angular.z = 0
+        # return cmd_vel
     
         ############################################
 
