@@ -1,6 +1,13 @@
 # S25_roboticsII
 ROS2 Workspace for S25 RoboticsII
 
+## Group Members
+
+- Amar Maksumic
+- Shu-Wei (Wendy) Chen
+- Chacrica Pagadala
+- Thomas Byrne
+
 ## Fork the repository
 
 Press the `Fork` on the page and fork the repo to your account. This will create a repository with exact same content in your github account.
