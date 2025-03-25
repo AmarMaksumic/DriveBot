@@ -96,7 +96,7 @@ class TrackingNode(Node):
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
         if np.linalg.norm(center_points) > 3 or center_points[2] > 0.7:
-            return
+            self.get_logger().info('Obstacle too far or too high')
         
         try:
             # Transform the center point from the camera frame to the world frame
@@ -121,7 +121,7 @@ class TrackingNode(Node):
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
         if np.linalg.norm(center_points) > 3 or center_points[2] > 0.7:
-            return
+            self.get_logger().info('Goal too far or too high')
         
         try:
             # Transform the center point from the camera frame to the world frame
@@ -163,7 +163,7 @@ class TrackingNode(Node):
         # But, you may want to think about what to do in this case
         # and update the command velocity accordingly
         self.get_logger().info('Timer Update')
-        
+
         if self.goal_pose is None:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
