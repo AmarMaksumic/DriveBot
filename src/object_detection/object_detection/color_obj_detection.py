@@ -97,6 +97,7 @@ class ColorObjDetectionNode(Node):
         color_mask = cv2.inRange(hsv_image, param_color_low, param_color_high)
         # find largest contour
         contours, _ = cv2.findContours(color_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        self.get_logger().info('number of object contours: {}'.format(len(contours)))
         if len(contours) > 0:
             largest_contour = max(contours, key=cv2.contourArea)
             x, y, w, h = cv2.boundingRect(largest_contour)

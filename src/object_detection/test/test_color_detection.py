@@ -6,8 +6,8 @@ rgb_image = cv2.imread('camera.png')
 # to hsv
 hsv_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2HSV)
 # bounds
-low_1 = np.array([100,140,140])
-high_1 = np.array([140,255,255])
+low_1 = np.array([0,144,190])
+high_1 = np.array([18,179,255])
 
 # low_2 = np.array([160,144,190])
 # high_2 = np.array([180,179,255])
