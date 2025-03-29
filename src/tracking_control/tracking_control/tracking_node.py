@@ -205,13 +205,13 @@ class TrackingNode(Node):
             return Twist()
 
         # Calculate attractive force towards the goal
-        self.get_logger("Goal Pose: {}, Robot Pose: {}".format(current_goal_pose, robot_pose))
+        self.get_logger().info("Goal Pose: {}, Robot Pose: {}".format(current_goal_pose, robot_pose))
         goal_vector = np.array([current_goal_pose[0] - robot_pose[0], current_goal_pose[1] - robot_pose[1]])
         distance_to_goal = np.linalg.norm(goal_vector)
         attractive_force = k_goal * goal_vector / (distance_to_goal + 1e-6)
 
         # Calculate repulsive force from the obstacle
-        self.get_logger("Obstacle Pose: {}, Robot Pose: {}".format(current_obs_pose, robot_pose))
+        self.get_logger().info("Obstacle Pose: {}, Robot Pose: {}".format(current_obs_pose, robot_pose))
         obs_vector = np.array([current_obs_pose[0] - robot_pose[0], current_obs_pose[1] - robot_pose[1]])
         distance_to_obs = np.linalg.norm(obs_vector)
         if distance_to_obs < obs_threshold:
