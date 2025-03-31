@@ -97,7 +97,7 @@ class ColorObjDetectionNode(Node):
         color_mask = cv2.inRange(hsv_image, param_color_low, param_color_high)
         # find largest contour
         contours, _ = cv2.findContours(color_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        self.get_logger().info('number of object contours: {}'.format(len(contours)))
+        # self.get_logger().info('number of object contours: {}'.format(len(contours)))
         if len(contours) > 0:
             largest_contour = max(contours, key=cv2.contourArea)
             x, y, w, h = cv2.boundingRect(largest_contour)
@@ -140,7 +140,7 @@ class ColorObjDetectionNode(Node):
         # publush the detected object image
         detect_img_msg = self.br.cv2_to_imgmsg(rgb_image, encoding='bgr8')
         detect_img_msg.header = rgb_msg.header
-        self.get_logger().info('image message published')
+        # self.get_logger().info('image message published')
         self.pub_detected_obj.publish(detect_img_msg)
         
 def main(args=None):
