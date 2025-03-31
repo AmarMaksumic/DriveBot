@@ -189,6 +189,13 @@ class TrackingNode(Node):
         
         ########### Write your code here ###########
 
+        # If goal is less than 0.5m away, stop the robot
+        if np.linalg.norm(current_goal_pose) < 0.5:
+            cmd_vel = Twist()
+            cmd_vel.linear.x = 0.0
+            cmd_vel.angular.z = 0.0
+            return cmd_vel
+
         # Potential field algorithm
         # Parameters for potential field
         k_goal = 1.0  # Attraction gain
@@ -206,13 +213,13 @@ class TrackingNode(Node):
 
         # Calculate attractive force towards the goal
         self.get_logger("Goal Pose: {}, Robot Pose: {}".format(current_goal_pose, robot_pose))
-        goal_vector = np.array([current_goal_pose[0] - robot_pose[0], current_goal_pose[1] - robot_pose[1]])
+        goal_vector = np.array([current_goal_pose[0], current_goal_pose[1]])
         distance_to_goal = np.linalg.norm(goal_vector)
         attractive_force = k_goal * goal_vector / (distance_to_goal + 1e-6)
 
         # Calculate repulsive force from the obstacle
         self.get_logger("Obstacle Pose: {}, Robot Pose: {}".format(current_obs_pose, robot_pose))
-        obs_vector = np.array([current_obs_pose[0] - robot_pose[0], current_obs_pose[1] - robot_pose[1]])
+        obs_vector = np.array([current_obs_pose[0], current_obs_pose[1]])
         distance_to_obs = np.linalg.norm(obs_vector)
         if distance_to_obs < obs_threshold:
             repulsive_force = k_obs * (1 / (distance_to_obs + 1e-6) - 1 / obs_threshold) * (1 / (distance_to_obs**2 + 1e-6)) * (-obs_vector / (distance_to_obs + 1e-6))
@@ -223,8 +230,6 @@ class TrackingNode(Node):
         total_force = attractive_force + repulsive_force
 
         self.get_logger().info('Attractive Force: {}, Repulsive Force: {}, Total Force: {}'.format(attractive_force, repulsive_force, total_force))
-
-        # Compute Angular velocity
 
         # Convert force to velocity command
         cmd_vel = Twist()
